@@ -1,0 +1,134 @@
+
+              <div>
+                <h2 class="text-center">Estado de Cuenta</h2>
+                <hr style="border: 1px solid black;"/>
+              </div>
+              <div class="page">
+                <div class="row">
+                  <table class="table table-borderless" >
+                    <t t-set="total_amount_mxn" t-value="0"/>
+                    <t t-set="total_paid_mxn" t-value="0"/>
+                    <t t-set="total_residual_mxn" t-value="0"/>
+                    <t t-set="total_amount_usd" t-value="0"/>
+                    <t t-set="total_paid_usd" t-value="0"/>
+                    <t t-set="total_residual_usd" t-value="0"/>
+                    <!--<t t-set="total_a" t-value="0"/>-->
+                    <!--<t t-set="total_p" t-value="0"/>-->
+                    <!--<t t-set="total_r" t-value="0"/>-->
+                    <thead>
+                      <th scope="col">Concepto</th>
+                      <th scope="col">Documento</th>
+                      <th scope="col">Fecha Aplic.</th>
+                      <th scope="col">Fecha Venc.</th>
+                      <th class="text-center" scope="col">Cargos</th>
+                      <th class="text-center" scope="col">Abonos</th>
+                      <th class="text-center" scope="col">Saldos</th>
+                      <th class="text-center" scope="col">Moneda</th>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td colspan="2">
+                          <strong>Cliente: </strong>
+                          <span t-field="p.display_name"/></td>
+                      </tr>
+                      <tr t-foreach="p.invoices_ids" t-as="i">
+                        <t t-if="i.state == 'open'">
+                          <t t-set="amount_paid" t-value="i.amount_total-i.residual"/>
+                          <td><span>1 Factura</span></td>
+                          <td><span t-field="i.number"/></td>
+                          <td><span t-field="i.date_invoice"/></td>
+                          <td><span t-field="i.date_due"/></td>
+                          <td class="text-center">
+                            <span t-field="i.amount_total" t-options='{"widget": "float", "precision": 2}'/>
+                          </td>
+                          <td class="text-center">
+                            <span t-esc="amount_paid" t-options='{"widget": "float", "precision": 2}'/>
+                          </td>
+                          <td class="text-center">
+                            <span t-field="i.residual" t-options='{"widget": "float", "precision": 2}'/>
+                          </td>
+                          <td class="text-center"><span t-field="i.currency_id"/></td>
+                          <t t-if="i.currency_id.name == 'MXN'" t-set="total_amount_mxn" t-value="total_amount_mxn+i.amount_total"/>
+                          <t t-if="i.currency_id.name == 'MXN'" t-set="total_paid_mxn" t-value="total_paid_mxn+amount_paid"/>
+                          <t t-if="i.currency_id.name == 'MXN'" t-set="total_residual_mxn" t-value="total_residual_mxn+i.residual"/>
+                          <t t-if="i.currency_id.name == 'USD'" t-set="total_amount_usd" t-value="total_amount_usd+i.amount_total"/>
+                          <t t-if="i.currency_id.name == 'USD'" t-set="total_paid_usd" t-value="total_paid_usd+amount_paid"/>
+                          <t t-if="i.currency_id.name == 'USD'" t-set="total_residual_usd" t-value="total_residual_usd+i.residual"/>
+                          <!--<t t-set="total_a" t-value="total_a+total_amount"/>-->
+                          <!--<t t-set="total_p" t-value="total_p+total_paid"/>-->
+                          <!--<t t-set="total_r" t-value="total_r+total_residual"/>-->
+                        </t>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong>Total MXN: </strong></span>
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong t-esc="total_amount_mxn" t-options='{"widget": "float", "precision": 2}'></strong></span>
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong t-esc="total_paid_mxn" t-options='{"widget": "float", "precision": 2}'></strong></span>
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong t-esc="total_residual_mxn" t-options='{"widget": "float", "precision": 2}'></strong></span>
+                        </td>
+                        <t t-set="total_amount_mxn" t-value="0"/>
+                        <t t-set="total_paid_mxn" t-value="0"/>
+                        <t t-set="total_residual_mxn" t-value="0"/>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong>Total USD: </strong></span>
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong t-esc="total_amount_usd" t-options='{"widget": "float", "precision": 2}'></strong></span>
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong t-esc="total_paid_usd" t-options='{"widget": "float", "precision": 2}'></strong></span>
+                        </td>
+                        <td class="text-center">
+                          <hr style="border: 1px solid black;"/>
+                          <span><strong t-esc="total_residual_usd" t-options='{"widget": "float", "precision": 2}'></strong></span>
+                        </td>
+                        <t t-set="total_amount_usd" t-value="0"/>
+                        <t t-set="total_paid_usd" t-value="0"/>
+                        <t t-set="total_residual_usd" t-value="0"/>
+                      </tr>
+                    </tbody>
+                    <br/>
+                    <tfoot>
+                      <!--<tr></tr>-->
+                      <!--<tr>-->
+                        <!--<td colspan="4">-->
+                        <!--</td>-->
+                        <!--<td>-->
+                          <!--<span><strong>Totales:</strong></span>-->
+                        <!--</td>-->
+                        <!--<td class="text-center">-->
+                          <!--<hr style="border: 1px solid black;"/>-->
+                          <!--<span><strong t-esc="total_a" t-options='{"widget": "float", "precision": 2}'></strong></span>-->
+                        <!--</td>-->
+                        <!--<td class="text-center">-->
+                          <!--<hr style="border: 1px solid black;"/>-->
+                          <!--<span><strong t-esc="total_p" t-options='{"widget": "float", "precision": 2}'></strong></span>-->
+                        <!--</td>-->
+                        <!--<td class="text-Center">-->
+                          <!--<hr style="border: 1px solid black;"/>-->
+                          <!--<span><strong t-esc="total_r" t-options='{"widget": "float", "precision": 2}'></strong></span>-->
+                        <!--</td>-->
+                      <!--</tr>-->
+                    </tfoot>
+                  </table>
+                </div>
+              </div>

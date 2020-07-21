@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+  <data>
+    <template id="report_account_invoice">
+      <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="acc">
+          <t t-call="web.external_layout">
+            <div class="article">
+              <div>
+                <h2 class="text-center">Factura Electronica</h2>
+                <hr style="border: 1px solid black;"/>
+              </div>
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+
+    <report
+      id="account_invoice_report"
+      model="account.invoice"
+      string="Factura Electronica"
+      report_type="qweb-pdf"
+      name="report_general_collection.report_account_invoice"
+      file="report_general_collection.report_account_invoice"
+    />
+  </data>
+</odoo>
