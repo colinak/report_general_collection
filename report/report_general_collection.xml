@@ -5,14 +5,14 @@
       <t t-call="web.html_container">
         <t t-foreach="docs" t-as="acc">
           <t t-call="web.external_layout">
-            <div class="containecontainer">
+            <div class="container">
               <div>
                 <h2 class="text-center">Estado de Cuenta</h2>
                 <hr style="border: 1px solid black;"/>
               </div>
-              <div class="page">
+              <div class="page" t-foreach="acc.partner_ids" t-as="p">
                 <div class="row">
-                  <table class="table table-borderless" t-foreach="acc.partner_ids" t-as="p">
+                  <table class="table table-borderless">
                     <t t-set="total_amount_mxn" t-value="0"/>
                     <t t-set="total_paid_mxn" t-value="0"/>
                     <t t-set="total_residual_mxn" t-value="0"/>
