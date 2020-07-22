@@ -16,7 +16,6 @@
     ],
     "data": [
         'report/report_general_collection.xml',
-        'report/account_invoice_report.xml',
         'wizard/general_collection_wizard.xml',
     ],
     "demo": [
